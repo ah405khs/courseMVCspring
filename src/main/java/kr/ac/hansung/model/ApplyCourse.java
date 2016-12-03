@@ -1,5 +1,7 @@
 package kr.ac.hansung.model;
 
+
+
 public class ApplyCourse {
 	private String course_id;
 	private int year;

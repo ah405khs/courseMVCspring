@@ -2,6 +2,8 @@ package kr.ac.hansung.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,18 +24,19 @@ public class ApplyController {
 	
 	@RequestMapping("/apply_course")
 	public String apply(){
+		
 		return "apply";
 	}
 	
 	@RequestMapping(value="/applynew", method=RequestMethod.POST)
-	public String newApply(Model model, ApplyCourse apply){		
-//		ApplyCourse apply = new ApplyCourse();	
-//		apply.setCourse_id("ABCDE");
-//		apply.setCoursename("컴퓨터");
-//		apply.setCredit(3);
-//		apply.setDivision("전공");
-//		apply.setTerm(1);
-//		apply.setYear(1);
+	public String newApply(Model model, HttpServletRequest request){		
+		ApplyCourse apply = new ApplyCourse();	
+		apply.setCourse_id(request.getParameter("course_id"));
+		apply.setCoursename(request.getParameter("coursename"));
+		apply.setCredit(Integer.parseInt(request.getParameter("credit")));
+		apply.setDivision(request.getParameter("division"));
+		apply.setTerm(Integer.parseInt(request.getParameter("term")));
+		apply.setYear(Integer.parseInt(request.getParameter("year")));
 		applyService.insert(apply);
 		List<ApplyCourse> applyCourse = applyService.getCurrent();
 		model.addAttribute("applycourse",applyCourse);
